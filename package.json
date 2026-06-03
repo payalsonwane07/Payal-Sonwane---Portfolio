@@ -1,0 +1,10 @@
+{
+  "name": "payal-sonwane-portfolio",
+  "version": "1.0.0",
+  "description": "Payal Sonwane AI Automation Portfolio",
+  "private": true,
+  "scripts": {
+    "dev": "npx --yes serve . -l 3000",
+    "start": "npm run dev"
+  }
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | Payal Sonwane</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      (function () {
+        if (localStorage.getItem("portfolio-theme") === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html">Payal Sonwane</a>
+        <div class="nav-end">
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a class="active" href="contact.html">Contact</a></li>
+          </ul>
+          <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light mode" title="Toggle dark/light mode">
+            <span class="icon-sun" aria-hidden="true">&#9728;</span>
+            <span class="icon-moon" aria-hidden="true">&#9790;</span>
+          </button>
+          <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-header">
+        <div class="container reveal">
+          <h1>Let&rsquo;s build something <span>good</span>.</h1>
+          <p>Open to internship opportunities in AI automation and data workflows.</p>
+        </div>
+      </section>
+
+      <section class="contact-main section">
+        <div class="container contact-grid">
+          <article class="contact-card glass reveal">
+            <h2>Contact Details</h2>
+            <p>Reach out for collaborations, internships, or project discussions.</p>
+            <ul class="contact-list">
+              <li>
+                <span>Email</span>
+                <a href="mailto:payalsonwane791@gmail.com">payalsonwane791@gmail.com</a>
+              </li>
+              <li>
+                <span>Phone</span>
+                <a href="tel:8149160901">8149160901</a>
+              </li>
+              <li>
+                <span>Location</span>
+                Nagpur, Maharashtra
+              </li>
+              <li>
+                <span>GitHub</span>
+                <a href="https://github.com/PayalSonwane07" target="_blank" rel="noreferrer">github.com/PayalSonwane07</a>
+              </li>
+            </ul>
+            <div class="contact-icon-row">
+              <a class="social-icon" href="https://github.com/PayalSonwane07" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
+              <a class="social-icon" href="mailto:payalsonwane791@gmail.com" aria-label="Email">@</a>
+              <a class="social-icon" href="tel:8149160901" aria-label="Phone">&#9742;</a>
+            </div>
+          </article>
+
+          <!--
+            WEB3FORMS SETUP
+            1. Sign up free at https://web3forms.com (use payalsonwane791@gmail.com)
+            2. Copy your Access Key from the dashboard
+            3. Replace YOUR_WEB3FORMS_ACCESS_KEY below in the hidden access_key input
+            4. Submissions are emailed to the address you verified on Web3Forms (your inbox)
+            5. Test: fill the form on contact.html → Send → check inbox + Web3Forms dashboard
+          -->
+          <article class="contact-form-wrap glass reveal">
+            <h2>Send a Message</h2>
+            <p class="form-hint">Messages are delivered to my email via Web3Forms — no backend server required.</p>
+
+            <form
+              id="contact-form"
+              class="web3form"
+              action="https://api.web3forms.com/submit"
+              method="POST"
+              novalidate
+            >
+              <!-- Required: your secret key from https://web3forms.com -->
+              <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+
+              <!-- Optional: subject line in your email inbox -->
+              <input type="hidden" name="subject" value="New message from Payal Sonwane Portfolio" />
+
+              <!-- Redirect after submit (optional; JS handles UX without leaving page) -->
+              <input type="hidden" name="from_name" value="Portfolio Contact Form" />
+
+              <!-- Honeypot spam protection — bots fill this; humans never see it -->
+              <label class="honeypot" aria-hidden="true">
+                Do not fill this out
+                <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" />
+              </label>
+
+              <div class="form-group">
+                <label for="name">Name <span class="required">*</span></label>
+                <input id="name" name="name" type="text" minlength="2" required autocomplete="name" placeholder="Your full name" />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email <span class="required">*</span></label>
+                <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
+              </div>
+
+              <div class="form-group">
+                <label for="message">Message <span class="required">*</span></label>
+                <textarea id="message" name="message" minlength="10" required placeholder="Tell me about your project or opportunity..."></textarea>
+              </div>
+
+              <button class="submit-btn" type="submit" id="submit-btn">
+                <span class="btn-text">Send Message</span>
+              </button>
+
+              <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+            </form>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-divider"></div>
+      <div class="container footer-top">
+        <section>
+          <h3>Payal Sonwane</h3>
+          <p>Electrical Engineering graduate building practical AI automation solutions.</p>
+          <div class="footer-social">
+            <a class="social-icon" href="https://github.com/PayalSonwane07" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
+            <a class="social-icon" href="mailto:payalsonwane791@gmail.com" aria-label="Email">@</a>
+            <a class="social-icon" href="tel:8149160901" aria-label="Phone">&#9742;</a>
+          </div>
+        </section>
+        <section>
+          <h3>Quick Links</h3>
+          <ul class="footer-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </section>
+        <section>
+          <h3>Contact</h3>
+          <ul class="footer-list">
+            <li><a href="mailto:payalsonwane791@gmail.com">payalsonwane791@gmail.com</a></li>
+            <li><a href="tel:8149160901">8149160901</a></li>
+            <li><a href="https://github.com/PayalSonwane07" target="_blank" rel="noreferrer">github.com/PayalSonwane07</a></li>
+            <li>Nagpur, Maharashtra</li>
+          </ul>
+        </section>
+      </div>
+      <div class="footer-bottom container">
+        &copy; 2026 Payal Sonwane | Built with curiosity and creativity.
+      </div>
+    </footer>
+
+    <button class="scroll-top" type="button" aria-label="Scroll to top">&#8593;</button>
+    <script src="script.js"></script>
+  </body>
+</html>

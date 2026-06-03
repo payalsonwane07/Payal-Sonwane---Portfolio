@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects | Payal Sonwane</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      (function () {
+        if (localStorage.getItem("portfolio-theme") === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html">Payal Sonwane</a>
+        <div class="nav-end">
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a class="active" href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+          <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light mode" title="Toggle dark/light mode">
+            <span class="icon-sun" aria-hidden="true">&#9728;</span>
+            <span class="icon-moon" aria-hidden="true">&#9790;</span>
+          </button>
+          <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-header">
+        <div class="container reveal">
+          <h1>Selected <span>Work</span></h1>
+          <p>Six projects, one focus: automation that saves time.</p>
+        </div>
+      </section>
+
+      <section class="projects-main section">
+        <div class="container">
+          <div class="filter-bar reveal">
+            <button class="filter-btn active" type="button" data-filter="all">All</button>
+            <button class="filter-btn" type="button" data-filter="automation">Automation</button>
+            <button class="filter-btn" type="button" data-filter="data">Data</button>
+            <button class="filter-btn" type="button" data-filter="ai">AI</button>
+            <button class="filter-btn" type="button" data-filter="web">Web</button>
+          </div>
+
+          <div class="projects-grid reveal-stagger">
+            <article class="project-card glass" data-category="automation web">
+              <div class="project-thumb-wrap">
+                <div class="project-thumb" style="background: linear-gradient(135deg, #16213e, #d4af37);"></div>
+                <div class="project-overlay">
+                  <p>End-to-end restaurant web automation with AI-assisted customer flows.</p>
+                </div>
+              </div>
+              <div class="project-content">
+                <h3>AI-Powered Restaurant Website Automation</h3>
+                <p>Automates restaurant web tasks and improves customer interaction.</p>
+                <div class="tag-row">
+                  <span class="tag">AI</span>
+                  <span class="tag">Automation</span>
+                  <span class="tag">Web</span>
+                </div>
+                <a class="project-link" href="contact.html">View Case Study</a>
+              </div>
+            </article>
+
+            <article class="project-card glass" data-category="data automation">
+              <div class="project-thumb-wrap">
+                <div class="project-thumb" style="background: linear-gradient(135deg, #0f3460, #c0c0c0);"></div>
+                <div class="project-overlay">
+                  <p>Gmail pipeline for organizing emails and generating analytics dashboards.</p>
+                </div>
+              </div>
+              <div class="project-content">
+                <h3>Gmail Data Automation &amp; Email Analytics</h3>
+                <p>Organizes email data and generates useful insights.</p>
+                <div class="tag-row">
+                  <span class="tag">Gmail</span>
+                  <span class="tag">Analytics</span>
+                  <span class="tag">Python</span>
+                </div>
+                <a class="project-link" href="contact.html">View Case Study</a>
+              </div>
+            </article>
+
+            <article class="project-card glass" data-category="data automation">
+              <div class="project-thumb-wrap">
+                <div class="project-thumb" style="background: linear-gradient(135deg, #1a1a2e, #d4af37);"></div>
+                <div class="project-overlay">
+                  <p>Transforms raw spreadsheets into polished, scheduled business reports.</p>
+                </div>
+              </div>
+              <div class="project-content">
+                <h3>Automated Report Generator</h3>
+                <p>Creates structured reports from data automatically.</p>
+                <div class="tag-row">
+                  <span class="tag">Reports</span>
+                  <span class="tag">Excel</span>
+                  <span class="tag">Workflow</span>
+                </div>
+                <a class="project-link" href="contact.html">View Case Study</a>
+              </div>
+            </article>
+
+            <article class="project-card glass" data-category="data web">
+              <div class="project-thumb-wrap">
+                <div class="project-thumb" style="background: linear-gradient(135deg, #16213e, #0f3460);"></div>
+                <div class="project-overlay">
+                  <p>Tracks spending patterns with visual summaries and smart categorization.</p>
+                </div>
+              </div>
+              <div class="project-content">
+                <h3>Smart Expense Tracker Application</h3>
+                <p>Helps users track and analyze spending.</p>
+                <div class="tag-row">
+                  <span class="tag">Finance</span>
+                  <span class="tag">Tracking</span>
+                  <span class="tag">Dashboard</span>
+                </div>
+                <a class="project-link" href="contact.html">View Case Study</a>
+              </div>
+            </article>
+
+            <article class="project-card glass" data-category="ai automation">
+              <div class="project-thumb-wrap">
+                <div class="project-thumb" style="background: linear-gradient(135deg, #d4af37, #16213e);"></div>
+                <div class="project-overlay">
+                  <p>AI agent handling common support queries with workflow routing.</p>
+                </div>
+              </div>
+              <div class="project-content">
+                <h3>AI Customer Support Agent</h3>
+                <p>Responds to common queries using AI workflows.</p>
+                <div class="tag-row">
+                  <span class="tag">Support</span>
+                  <span class="tag">AI Agent</span>
+                  <span class="tag">Operations</span>
+                </div>
+                <a class="project-link" href="contact.html">View Case Study</a>
+              </div>
+            </article>
+
+            <article class="project-card glass" data-category="automation data">
+              <div class="project-thumb-wrap">
+                <div class="project-thumb" style="background: linear-gradient(135deg, #0f3460, #d4af37);"></div>
+                <div class="project-overlay">
+                  <p>Automates lead capture, scoring, and CRM pipeline management.</p>
+                </div>
+              </div>
+              <div class="project-content">
+                <h3>LeadFlow Generation &amp; CRM Automation</h3>
+                <p>Automates lead capture and management processes.</p>
+                <div class="tag-row">
+                  <span class="tag">CRM</span>
+                  <span class="tag">Leads</span>
+                  <span class="tag">Automation</span>
+                </div>
+                <a class="project-link" href="contact.html">View Case Study</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-divider"></div>
+      <div class="container footer-top">
+        <section>
+          <h3>Payal Sonwane</h3>
+          <p>Electrical Engineering graduate building practical AI automation solutions.</p>
+          <div class="footer-social">
+            <a class="social-icon" href="https://github.com/PayalSonwane07" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
+            <a class="social-icon" href="mailto:payalsonwane791@gmail.com" aria-label="Email">@</a>
+            <a class="social-icon" href="tel:8149160901" aria-label="Phone">&#9742;</a>
+          </div>
+        </section>
+        <section>
+          <h3>Quick Links</h3>
+          <ul class="footer-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </section>
+        <section>
+          <h3>Contact</h3>
+          <ul class="footer-list">
+            <li><a href="mailto:payalsonwane791@gmail.com">payalsonwane791@gmail.com</a></li>
+            <li><a href="tel:8149160901">8149160901</a></li>
+            <li><a href="https://github.com/PayalSonwane07" target="_blank" rel="noreferrer">github.com/PayalSonwane07</a></li>
+            <li>Nagpur, Maharashtra</li>
+          </ul>
+        </section>
+      </div>
+      <div class="footer-bottom container">
+        &copy; 2026 Payal Sonwane | Built with curiosity and creativity.
+      </div>
+    </footer>
+
+    <button class="scroll-top" type="button" aria-label="Scroll to top">&#8593;</button>
+    <script src="script.js"></script>
+  </body>
+</html>
