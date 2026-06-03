@@ -247,54 +247,19 @@ function initContactForm() {
       submitBtn.disabled = true;
     }
 
-    // Debug logging: check that the Supabase client is loaded and the URL is set.
-    console.log("Supabase client status:", {
-      url: window.SUPABASE_URL,
-      clientLoaded: typeof window.supabaseClient !== "undefined",
-      clientType: typeof window.supabaseClient,
-    });
-
     try {
-      // Save the contact submission into the Supabase table called `form`.
-      const { data, error } = await window.supabaseClient.from("form").insert([
-        { full_name: name, email, subject, message },
+      const created_at = new Date().toISOString();
+      const { data, error } = await window.supabaseClient.from("contacts").insert([
+        { name, email, subject, message, created_at },
       ]);
-
-      // Log the full Supabase response for debugging.
-      console.log({ data, error });
 
       if (error) {
         console.error("Supabase insert error:", error);
-
-        // If the table does not exist, try an older fallback table name.
-        if (error.message && /relation \"form\" does not exist/.test(error.message)) {
-          const retry = await window.supabaseClient.from("contacts").insert([
-            { name, email, subject, message },
-          ]);
-          console.log({ retry });
-          if (!retry.error) {
-            contactForm.style.display = "none";
-            setMessage("Thank you! Your message was saved successfully.", "success");
-            contactForm.reset();
-            return;
-          }
-          setMessage(`Something went wrong: ${retry.error.message}`, "error");
-          return;
-        }
-
-        // Show a specific error when RLS or permissions are the issue.
-        if (error.message && /permission denied/i.test(error.message)) {
-          setMessage("Permission denied. Check your Supabase table RLS policy and anon key.", "error");
-          return;
-        }
-
         const errorText = error.message || JSON.stringify(error);
         setMessage(`Something went wrong: ${errorText}`, "error");
       } else {
-        // Hide the form and show the green success message.
-        contactForm.style.display = "none";
-        setMessage("Thank you! Your message was saved successfully.", "success");
         contactForm.reset();
+        setMessage("Thanks for sending a message. I reply within 24 hours.", "success");
       }
     } catch (err) {
       console.error("Supabase error:", err);

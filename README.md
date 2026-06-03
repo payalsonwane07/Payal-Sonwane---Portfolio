@@ -58,35 +58,31 @@ npm run dev
 
 This contact form saves messages directly to your Supabase `form` table using the browser-side Supabase client.
 
-### 1. Create the form table
+### 1. Get your access key
 
-1. Go to [https://supabase.com](https://supabase.com) and open your project.
-2. In Database → Table Editor, create a table named `form`.
-3. Add these columns:
-   - `full_name` (text)
-   - `email` (text)
-   - `subject` (text)
-   - `message` (text)
-   - `created_at` (timestamp with time zone, default `now()`)
-4. Enable Row Level Security and allow inserts from the public anon key for the table.
+1. Go to [https://web3forms.com](https://web3forms.com)
+2. Sign up with **payalsonwane791@gmail.com** (or your preferred inbox)
+3. Verify your email
+4. Copy your **Access Key** from the dashboard
 
-### 2. Add Supabase credentials
+### 2. Add the key to the project
 
-Open `supabase-config.js` and replace:
+Open `contact.html` and find:
 
-```js
-const SUPABASE_URL = "https://YOUR_SUPABASE_PROJECT_URL.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+```html
+<input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
 ```
 
-with your actual Supabase project URL and anon key from Project Settings → API.
+Replace `YOUR_WEB3FORMS_ACCESS_KEY` with your real key.
+
+> **Note:** The access key is public in static HTML (normal for Web3Forms). You can restrict domains in the Web3Forms dashboard after deploy.
 
 ### 3. Where the data goes
 
-- Visitor fills: **Full Name**, **Email Address**, **Subject**, **Message**
-- Browser sends the data directly to Supabase using the JavaScript client
-- Supabase inserts the row into the `form` table
-- `created_at` is stored with the current timestamp
+- Visitor fills: **Name**, **Email**, **Message**
+- Browser sends a POST request to `https://api.web3forms.com/submit`
+- Web3Forms emails the submission to the address you verified at signup
+- You can also view submissions in the Web3Forms dashboard
 
 ### 4. Test the form
 
@@ -110,7 +106,7 @@ In PowerShell or Terminal, from the `payal-portfolio` folder:
 ```bash
 git init
 git add .
-git commit -m "Add contact form with Supabase"
+git commit -m "Add contact form with Web3Forms"
 git branch -M main
 git remote add origin https://github.com/PayalSonwane07/payal-portfolio.git
 git push -u origin main
