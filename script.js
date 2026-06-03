@@ -191,8 +191,8 @@ function initProjectFilter() {
   });
 }
 
-/* Web3Forms: https://web3forms.com → Access Key → paste in contact.html
- * Submissions email your verified inbox. Test via contact.html + local server. */
+/* Supabase: https://supabase.com → Project URL & anon key → initialize in contact.html
+ * Submissions saved to Supabase PostgreSQL `form` table. Test via contact.html + local server. */
 function initContactForm() {
   const contactForm = document.querySelector("#contact-form");
   const formMessage = document.querySelector("#form-message");
@@ -202,7 +202,6 @@ function initContactForm() {
   const emailInput = document.querySelector("#email");
   const messageInput = document.querySelector("#message");
   const submitBtn = contactForm.querySelector(".submit-btn");
-  const accessKeyInput = contactForm.querySelector('input[name="access_key"]');
 
   const setMessage = (text, type) => {
     if (!formMessage) return;
@@ -215,10 +214,9 @@ function initContactForm() {
     const name = nameInput?.value.trim() || "";
     const email = emailInput?.value.trim() || "";
     const message = messageInput?.value.trim() || "";
-    const accessKey = accessKeyInput?.value.trim() || "";
 
-    if (!accessKey || accessKey === "YOUR_WEB3FORMS_ACCESS_KEY") {
-      setMessage("Add your Web3Forms access key in contact.html (see README).", "error");
+    if (!window.supabaseClient) {
+      setMessage("Supabase is not initialized. Check your contact.html for Supabase configuration.", "error");
       return;
     }
     if (name.length < 2) {
@@ -241,21 +239,29 @@ function initContactForm() {
     }
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: new FormData(contactForm),
-      });
-      const result = await response.json();
-      if (response.ok && result.success) {
-        setMessage("Thank you! Your message was sent — I will get back to you soon.", "success");
-        contactForm.reset();
-        if (accessKeyInput) accessKeyInput.value = accessKey;
+      const created_at = new Date().toISOString();
+      const { data, error } = await window.supabaseClient.from("form").insert([
+        { full_name: name, email, subject: "Portfolio Contact", message, created_at, is_read: false },
+      ]);
+
+      console.log({ data, error });
+
+      if (error) {
+        console.error("Supabase insert error:", error);
+        if (error.message && /permission denied/i.test(error.message)) {
+          setMessage("Permission denied. Check your Supabase RLS policy and anon key.", "error");
+          return;
+        }
+        const errorText = error.message || JSON.stringify(error);
+        setMessage(`Something went wrong: ${errorText}`, "error");
       } else {
-        setMessage(result.message || "Submission failed. Please try again.", "error");
+        contactForm.style.display = "none";
+        setMessage("Thank you! Your message was saved successfully. I'll get back to you soon.", "success");
+        contactForm.reset();
       }
     } catch (err) {
-      console.error("Web3Forms error:", err);
-      setMessage("Network error. Email payalsonwane791@gmail.com directly.", "error");
+      console.error("Supabase error:", err);
+      setMessage("Network error. Please try again or email payalsonwane791@gmail.com directly.", "error");
     } finally {
       if (submitBtn) {
         submitBtn.classList.remove("loading");
