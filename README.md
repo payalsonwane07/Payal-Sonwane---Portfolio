@@ -2,7 +2,7 @@
 
 A professional static portfolio for **Payal Sonwane**, Electrical Engineering graduate focused on AI automation, Python, data workflows, and practical business tools.
 
-**Live site (after GitHub Pages):** `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/`
+**Live site (after GitHub Pages):** `https://payalsonwane07.github.io/Payal-Sonwane---Portfolio/`
 
 ---
 
@@ -56,40 +56,51 @@ npm run dev
 
 ## Contact form — Supabase setup
 
-This contact form saves messages directly to your Supabase `form` table using the browser-side Supabase client.
+This contact form saves messages directly to your Supabase `contacts` table using the browser-side Supabase client.
 
-### 1. Get your access key
+### 1. Create a Supabase project
 
-1. Go to [https://web3forms.com](https://web3forms.com)
-2. Sign up with **payalsonwane791@gmail.com** (or your preferred inbox)
-3. Verify your email
-4. Copy your **Access Key** from the dashboard
+1. Go to [https://supabase.com](https://supabase.com)
+2. Sign up and create a new project
+3. In the SQL Editor, run:
 
-### 2. Add the key to the project
-
-Open `contact.html` and find:
-
-```html
-<input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+```sql
+CREATE TABLE contacts (
+  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  subject TEXT NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
 ```
 
-Replace `YOUR_WEB3FORMS_ACCESS_KEY` with your real key.
+### 2. Enable Row Level Security (RLS)
 
-> **Note:** The access key is public in static HTML (normal for Web3Forms). You can restrict domains in the Web3Forms dashboard after deploy.
+1. Go to your table → **RLS** tab
+2. Create a policy to allow public inserts:
+   - Policy type: **Insert**
+   - Role: **anon**
+   - Condition: Always true
+   - With check: Always true
 
-### 3. Where the data goes
+### 3. Add your credentials
 
-- Visitor fills: **Name**, **Email**, **Message**
-- Browser sends a POST request to `https://api.web3forms.com/submit`
-- Web3Forms emails the submission to the address you verified at signup
-- You can also view submissions in the Web3Forms dashboard
+1. Go to **Settings** → **API** in Supabase
+2. Copy your **Project URL** and **anon key**
+3. Open `supabase-config.js` and replace:
+
+```javascript
+window.SUPABASE_URL = "https://YOUR_PROJECT_URL.supabase.co";
+window.SUPABASE_ANON_KEY = "YOUR_ANON_KEY";
+```
 
 ### 4. Test the form
 
 1. Run a local server (`npx serve .`)
 2. Open `http://localhost:3000/contact.html`
 3. Submit a test message
-4. Confirm the row appears in your Supabase `form` table and the page shows success
+4. Check your Supabase `contacts` table to confirm the row appears
 
 ---
 
@@ -106,13 +117,11 @@ In PowerShell or Terminal, from the `payal-portfolio` folder:
 ```bash
 git init
 git add .
-git commit -m "Add contact form with Web3Forms"
+git commit -m "Add Supabase contact form"
 git branch -M main
-git remote add origin https://github.com/PayalSonwane07/payal-portfolio.git
+git remote add origin https://github.com/payalsonwane07/Payal-Sonwane---Portfolio.git
 git push -u origin main
 ```
-
-Replace `PayalSonwane07/payal-portfolio` with your username and repo name.
 
 ### Step 3 — Enable GitHub Pages
 
@@ -122,7 +131,7 @@ Replace `PayalSonwane07/payal-portfolio` with your username and repo name.
 4. **Branch:** `main` → folder **`/ (root)`**
 5. Click **Save**
 6. Wait **2–30 minutes** for the site to build
-7. Your URL will be: `https://PayalSonwane07.github.io/payal-portfolio/`
+7. Your URL will be: `https://payalsonwane07.github.io/Payal-Sonwane---Portfolio/`
 
 ### Important for GitHub Pages
 
