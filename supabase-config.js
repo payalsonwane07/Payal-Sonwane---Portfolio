@@ -1,0 +1,3 @@
+window.SUPABASE_URL = "https://qbkpifomresniyetdtui.supabase.co";
+window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFia3BpZm9tcmVzbml5ZXRkdHVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NzQ1MTgsImV4cCI6MjA5NjA1MDUxOH0.GnoSAlK5n1n-xtFTd7M5W0W4JKa05v8Btb2gkfC37GY";
+window.supabaseClient = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);

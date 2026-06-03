@@ -1,5 +1,9 @@
 console.log("Portfolio loaded");
 
+// These values are set in supabase-config.js.
+// Replace them there after you copy the Project URL and anon key from Supabase.
+// supabaseClient is created in supabase-config.js and used here by script.js.
+
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 
@@ -191,8 +195,7 @@ function initProjectFilter() {
   });
 }
 
-/* Web3Forms: https://web3forms.com → Access Key → paste in contact.html
- * Submissions email your verified inbox. Test via contact.html + local server. */
+/* Supabase contact form: sends data directly to your Supabase table. */
 function initContactForm() {
   const contactForm = document.querySelector("#contact-form");
   const formMessage = document.querySelector("#form-message");
@@ -200,9 +203,9 @@ function initContactForm() {
 
   const nameInput = document.querySelector("#name");
   const emailInput = document.querySelector("#email");
+  const subjectInput = document.querySelector("#subject");
   const messageInput = document.querySelector("#message");
   const submitBtn = contactForm.querySelector(".submit-btn");
-  const accessKeyInput = contactForm.querySelector('input[name="access_key"]');
 
   const setMessage = (text, type) => {
     if (!formMessage) return;
@@ -214,23 +217,27 @@ function initContactForm() {
     event.preventDefault();
     const name = nameInput?.value.trim() || "";
     const email = emailInput?.value.trim() || "";
+    const subject = subjectInput?.value.trim() || "";
     const message = messageInput?.value.trim() || "";
-    const accessKey = accessKeyInput?.value.trim() || "";
 
-    if (!accessKey || accessKey === "YOUR_WEB3FORMS_ACCESS_KEY") {
-      setMessage("Add your Web3Forms access key in contact.html (see README).", "error");
+    if (typeof window.supabaseClient === "undefined") {
+      setMessage("Please add your Supabase URL and anon key in supabase-config.js first.", "error");
       return;
     }
     if (name.length < 2) {
-      setMessage("Please enter your name (at least 2 characters).", "error");
+      setMessage("Please enter your full name.", "error");
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setMessage("Please enter a valid email address.", "error");
       return;
     }
+    if (subject.length < 3) {
+      setMessage("Please enter a subject for your message.", "error");
+      return;
+    }
     if (message.length < 10) {
-      setMessage("Message should be at least 10 characters.", "error");
+      setMessage("Please enter a longer message.", "error");
       return;
     }
 
@@ -240,22 +247,59 @@ function initContactForm() {
       submitBtn.disabled = true;
     }
 
+    // Debug logging: check that the Supabase client is loaded and the URL is set.
+    console.log("Supabase client status:", {
+      url: window.SUPABASE_URL,
+      clientLoaded: typeof window.supabaseClient !== "undefined",
+      clientType: typeof window.supabaseClient,
+    });
+
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: new FormData(contactForm),
-      });
-      const result = await response.json();
-      if (response.ok && result.success) {
-        setMessage("Thank you! Your message was sent — I will get back to you soon.", "success");
-        contactForm.reset();
-        if (accessKeyInput) accessKeyInput.value = accessKey;
+      // Save the contact submission into the Supabase table called `form`.
+      const { data, error } = await window.supabaseClient.from("form").insert([
+        { full_name: name, email, subject, message },
+      ]);
+
+      // Log the full Supabase response for debugging.
+      console.log({ data, error });
+
+      if (error) {
+        console.error("Supabase insert error:", error);
+
+        // If the table does not exist, try an older fallback table name.
+        if (error.message && /relation \"form\" does not exist/.test(error.message)) {
+          const retry = await window.supabaseClient.from("contacts").insert([
+            { name, email, subject, message },
+          ]);
+          console.log({ retry });
+          if (!retry.error) {
+            contactForm.style.display = "none";
+            setMessage("Thank you! Your message was saved successfully.", "success");
+            contactForm.reset();
+            return;
+          }
+          setMessage(`Something went wrong: ${retry.error.message}`, "error");
+          return;
+        }
+
+        // Show a specific error when RLS or permissions are the issue.
+        if (error.message && /permission denied/i.test(error.message)) {
+          setMessage("Permission denied. Check your Supabase table RLS policy and anon key.", "error");
+          return;
+        }
+
+        const errorText = error.message || JSON.stringify(error);
+        setMessage(`Something went wrong: ${errorText}`, "error");
       } else {
-        setMessage(result.message || "Submission failed. Please try again.", "error");
+        // Hide the form and show the green success message.
+        contactForm.style.display = "none";
+        setMessage("Thank you! Your message was saved successfully.", "success");
+        contactForm.reset();
       }
     } catch (err) {
-      console.error("Web3Forms error:", err);
-      setMessage("Network error. Email payalsonwane791@gmail.com directly.", "error");
+      console.error("Supabase error:", err);
+      const errorText = err?.message || String(err);
+      setMessage(`Something went wrong: ${errorText}`, "error");
     } finally {
       if (submitBtn) {
         submitBtn.classList.remove("loading");

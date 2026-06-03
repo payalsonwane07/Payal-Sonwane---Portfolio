@@ -13,7 +13,7 @@ A professional static portfolio for **Payal Sonwane**, Electrical Engineering gr
 | `index.html` | Home — hero, stats, skills |
 | `about.html` | About — bio, timeline, skill bars |
 | `projects.html` | Six automation projects with filters |
-| `contact.html` | Contact details + **Web3Forms** email form |
+| `contact.html` | Contact details + Supabase contact form |
 | `styles.css` | Shared styles (dark/light theme, animations) |
 | `script.js` | Navigation, theme toggle, form, scroll effects |
 
@@ -24,7 +24,7 @@ A professional static portfolio for **Payal Sonwane**, Electrical Engineering gr
 ### Option 1 — Open directly
 Double-click `index.html` or open it in your browser.
 
-> For the contact form, use a local server (Option 2) so `fetch` to Web3Forms works reliably.
+> For the contact form, use a local server (Option 2) so `fetch` to Supabase works reliably.
 
 ### Option 2 — Simple local server (recommended)
 
@@ -48,53 +48,52 @@ npm run dev
 
 - HTML5, CSS3 (custom properties, glass-morphism, animations)
 - Vanilla JavaScript (Intersection Observer, Fetch API)
-- [Web3Forms](https://web3forms.com) — serverless contact form → your email
+- [Supabase](https://supabase.com) — browser-side database storage for contact submissions
 - Google Fonts: Playfair Display, Poppins
 - GitHub Pages — static hosting (no backend)
 
 ---
 
-## Contact form — Web3Forms setup
+## Contact form — Supabase setup
 
-Submissions go **directly to your email inbox** via Web3Forms. No server code required.
+This contact form saves messages directly to your Supabase `form` table using the browser-side Supabase client.
 
-### 1. Get your access key
+### 1. Create the form table
 
-1. Go to [https://web3forms.com](https://web3forms.com)
-2. Sign up with **payalsonwane791@gmail.com** (or your preferred inbox)
-3. Verify your email
-4. Copy your **Access Key** from the dashboard
+1. Go to [https://supabase.com](https://supabase.com) and open your project.
+2. In Database → Table Editor, create a table named `form`.
+3. Add these columns:
+   - `full_name` (text)
+   - `email` (text)
+   - `subject` (text)
+   - `message` (text)
+   - `created_at` (timestamp with time zone, default `now()`)
+4. Enable Row Level Security and allow inserts from the public anon key for the table.
 
-### 2. Add the key to the project
+### 2. Add Supabase credentials
 
-Open `contact.html` and find:
+Open `supabase-config.js` and replace:
 
-```html
-<input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+```js
+const SUPABASE_URL = "https://YOUR_SUPABASE_PROJECT_URL.supabase.co";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
 ```
 
-Replace `YOUR_WEB3FORMS_ACCESS_KEY` with your real key.
-
-> **Note:** The access key is public in static HTML (normal for Web3Forms). You can restrict domains in the Web3Forms dashboard after deploy.
+with your actual Supabase project URL and anon key from Project Settings → API.
 
 ### 3. Where the data goes
 
-- Visitor fills: **Name**, **Email**, **Message**
-- Browser sends a POST request to `https://api.web3forms.com/submit`
-- Web3Forms emails the submission to the address you verified at signup
-- You can also view submissions in the Web3Forms dashboard
+- Visitor fills: **Full Name**, **Email Address**, **Subject**, **Message**
+- Browser sends the data directly to Supabase using the JavaScript client
+- Supabase inserts the row into the `form` table
+- `created_at` is stored with the current timestamp
 
 ### 4. Test the form
 
 1. Run a local server (`npx serve .`)
 2. Open `http://localhost:3000/contact.html`
-3. Submit a test message with your real email
-4. Check your inbox (and spam folder)
-5. Confirm success message appears on the page
-
-### Spam protection
-
-A hidden **honeypot** field (`botcheck`) is included. Bots that fill it are rejected by Web3Forms.
+3. Submit a test message
+4. Confirm the row appears in your Supabase `form` table and the page shows success
 
 ---
 
@@ -111,7 +110,7 @@ In PowerShell or Terminal, from the `payal-portfolio` folder:
 ```bash
 git init
 git add .
-git commit -m "Add contact form with Web3Forms"
+git commit -m "Add contact form with Supabase"
 git branch -M main
 git remote add origin https://github.com/PayalSonwane07/payal-portfolio.git
 git push -u origin main
@@ -132,7 +131,7 @@ Replace `PayalSonwane07/payal-portfolio` with your username and repo name.
 ### Important for GitHub Pages
 
 - All site files (`index.html`, `styles.css`, `script.js`, etc.) must be at the **repository root**, not inside a subfolder, unless you use a custom publish path.
-- After deploying, test the contact form on the live URL (Web3Forms works on HTTPS).
+- After deploying, test the contact form on the live URL (Supabase works on HTTPS).
 
 ---
 
@@ -163,4 +162,3 @@ payal-portfolio/
 ---
 
 © 2026 Payal Sonwane | Built with curiosity and creativity.
->>>>>>> dd2e558 (Add contact form with Web3Forms)
